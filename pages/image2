@@ -1,0 +1,2 @@
+import streamlit as st
+st.image("https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTd6Ymp1eXgza3RyYnRtdXI0Z2Joc3A1dzFjZWNoaHdqOWIxYThjbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Lv2VhwHrt6ljhvZ6LF/giphy.gif")
