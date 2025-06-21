@@ -1,2 +1,5 @@
 folium
 streamlit_folium
+plotly
+yfinance
+gspread
