@@ -1,1 +1,50 @@
 
+import streamlit as st
+import yfinance as yf
+import plotly.graph_objs as go
+from datetime import datetime, timedelta
+
+# 시가총액 기준 글로벌 Top 10 기업 (2025년 기준 대략적인 예시)
+top10_tickers = {
+    "Apple": "AAPL",
+    "Microsoft": "MSFT",
+    "Saudi Aramco": "2222.SR",
+    "Alphabet (Google)": "GOOGL",
+    "Amazon": "AMZN",
+    "Nvidia": "NVDA",
+    "Berkshire Hathaway": "BRK-B",
+    "Meta Platforms": "META",
+    "Eli Lilly": "LLY",
+    "TSMC": "TSM"
+}
+
+st.set_page_config(layout="wide")
+st.title("📈 글로벌 시가총액 Top 10 기업의 주가 변화 (최근 1년)")
+st.markdown("데이터 출처: Yahoo Finance | 기간: 지난 1년")
+
+# 날짜 설정
+end_date = datetime.today()
+start_date = end_date - timedelta(days=365)
+
+# 데이터 다운로드
+@st.cache_data
+def load_data(ticker):
+    stock = yf.Ticker(ticker)
+    return stock.history(start=start_date, end=end_date)
+
+# Plotly 그래프 생성
+fig = go.Figure()
+
+for name, ticker in top10_tickers.items():
+    data = load_data(ticker)
+    fig.add_trace(go.Scatter(x=data.index, y=data['Close'], mode='lines', name=name))
+
+fig.update_layout(
+    title="📊 글로벌 Top10 기업 주가 추이 (1년)",
+    xaxis_title="날짜",
+    yaxis_title="종가 (USD)",
+    template="plotly_white",
+    height=600
+)
+
+st.plotly_chart(fig, use_container_width=True)
